@@ -31,6 +31,17 @@ const xhr = {
                 resolve(res.data)
             })
         })
+    },
+    put(url,data,config){
+        return new Promise((resolve,reject) => {
+            instance.put(url,data,config).then(res => {
+                if(res.data.code == 401){
+                    Message.error('登录状态失效，正在跳转登录页')
+                    router.push('/login')
+                }
+                resolve(res.data)
+            })
+        })
     }
 }
 

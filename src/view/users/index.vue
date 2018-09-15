@@ -3,14 +3,14 @@
         <div class="breadcrumb">
             <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: '/layout/index' }">首页</el-breadcrumb-item>
-                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+                <el-breadcrumb-item>用户管理页</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <el-table :data="tableData">
             <el-table-column prop="nickname" label="姓名" width="130"></el-table-column>
             <el-table-column prop="createdTime" label="日期" width="130"></el-table-column>
             <el-table-column prop="desc" label="个性签名" width="400"></el-table-column>
-            <el-table-column prop="desc" label="用户头像" width="100">
+            <el-table-column label="用户头像" width="100">
                 <template slot-scope="scope">
                     <img :src="scope.row.avatar" class="avatar">
                 </template>
