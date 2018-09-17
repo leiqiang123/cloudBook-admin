@@ -12,12 +12,12 @@
         </el-form>
         <div>
             <span class="category-span">分类图片:</span>
-            <span>等会解决</span>
+            <uploadcom v-model="formData.icon"></uploadcom>
         </div>
         <div class="sort">
             <span class="category-span">分类排序</span>
             <template>
-                <el-input-number v-model="formData.index" @change="handleChange" :min="1" :max="1000" label="描述文字"></el-input-number>
+                <el-input-number v-model="formData.index" :min="1" :max="1000" label="描述文字"></el-input-number>
             </template>
         </div>
         <el-button @click="handleChange" type="primary" class="save-btn">提交修改</el-button>
@@ -25,7 +25,11 @@
 </template>
 
 <script>
+    import uploadcom from '@/components/uploadcom'
     export default {
+        components:{
+            uploadcom
+        },
         data () {
             return {
                 formData:{}
@@ -35,15 +39,18 @@
             getData () {
                 const id = this.$route.query.id
                 this.$axios.get(`/category/${id}`).then(res => {
-                    console.log(res)
+                    // console.log(res)
                     this.formData = res.data
                 })
             },
             handleChange () {
-                // const id = this.$route.query.id
-                // this.$axios.put(`/category/${id}`,this.formData).then(res => {
-                //     console.log(res)
-                // })
+                const id = this.$route.query.id
+                this.$axios.put(`/category/${id}`,this.formData).then(res => {
+                    if(res.code == 200){
+                        this.$message.success(res.msg)
+                        this.$router.push('/layout/categorylist')
+                    }
+                })
             }
         },
         created () {

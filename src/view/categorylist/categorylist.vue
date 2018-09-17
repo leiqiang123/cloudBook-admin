@@ -17,7 +17,7 @@
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button size="small" type="primary" @click="handleEdit(scope.row._id)">编辑</el-button>
-                    <el-button size="small" type="danger">删除分类</el-button>
+                    <el-button size="small" type="danger" @click="handleDelete(scope.row._id)">删除分类</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -43,6 +43,14 @@
                 this.$router.push({
                     path:'/layout/categoryedit',
                     query:{id}
+                })
+            },
+            handleDelete (id) {
+                this.$axios.delete(`/category/${id}`).then(res => {
+                    if(res.code == 200){
+                        this.$message.success(res.msg)
+                        this.getData()
+                    }
                 })
             }
         },

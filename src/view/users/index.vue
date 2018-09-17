@@ -22,6 +22,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination class="footer-page" @current-change="pageChange" :page-size="7" background layout="prev, pager, next" :total="1000"></el-pagination>
     </div>
 </template>
 
@@ -29,13 +30,16 @@
 export default {
     data(){
         return {
-            tableData:[]
+            tableData:[],
+            count:0,
+            page:1
         }
     },
     methods:{
         getData () {
-            this.$axios.get('/user').then(res => {
+            this.$axios.get('/user',{pn: this.page, size: 7}).then(res => {
                 if(res.code == 200){
+                    this.count = res.count
                     this.tableData = res.data
                 }
             })
@@ -59,11 +63,16 @@ export default {
                     message: '已取消删除'
                 });          
             });
-            }
         },
-        created(){
+        pageChange (page) {
+            console.log(page)
+            this.page = page
             this.getData()
         }
+    },
+    created(){
+        this.getData()
+    }
 };
 </script>
 <style scoped lang="scss">
@@ -71,6 +80,9 @@ export default {
   .avatar{
       widows: 60px;
       height: 60px;
+  }
+  .footer-page{
+      margin-left: 320px;
   }
 }
 </style>

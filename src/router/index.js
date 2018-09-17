@@ -12,7 +12,11 @@ const components = {
   categorylist:() => import('../view/categorylist/categorylist'),
   bookslist:() => import('../view/booksmanage/bookslist'),
   bookedit:() => import('../view/booksmanage/bookedit'),
-  categoryedit:() => import('../view/categorylist/categoryedit')
+  categoryedit:() => import('../view/categorylist/categoryedit'),
+  addbooks:() => import('../view/booksmanage/addbooks'),
+  addusers:() => import('../view/users/addusers'),
+  changeusers:() => import('../view/users/changeusers'),
+  addcategory:() => import('../view/categorylist/addcategory')
 }
 
 export default new Router({
@@ -71,6 +75,34 @@ export default new Router({
             title:'分类编辑'
           },
           component:components.categoryedit
+        },
+        {
+          path:'addbooks',
+          meta:{
+            title:'添加图书'
+          },
+          component:components.addbooks
+        },
+        {
+          path:'addusers',
+          meta:{
+            title:'添加用户管理员'
+          },
+          component:components.addusers
+        },
+        {
+          path:'changeusers',
+          meta:{
+            title:'修改个人信息'
+          },
+          component:components.changeusers
+        },
+        {
+          path:'addcategory',
+          meta:{
+            title:'添加分类'
+          },
+          component:components.addcategory
         }
       ]
     }
