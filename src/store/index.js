@@ -22,8 +22,7 @@ const store = new Vuex.Store({
     plugins:[createPersistedState({
         storage: {
             getItem: key => sessionStorage.getItem(key),
-            setItem: (key, value) =>
-              sessionStorage.setItem(key, value),
+            setItem: (key, value) => sessionStorage.setItem(key, value),
             removeItem: key => sessionStorage.removeItem(key),
         }
     })]

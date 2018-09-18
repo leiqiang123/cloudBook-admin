@@ -15,14 +15,26 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="index" label="书籍排序" width="200"></el-table-column>
-                <el-table-column prop="author" label="作者" width="200"></el-table-column>
+                <el-table-column label="作者" width="200">
+                    <template slot-scope="scope">
+                        <el-popover trigger="hover" placement="top">
+                            <p>作者: {{ scope.row.author }}</p>
+                            <p>描述: {{ scope.row.desc }}</p>
+                            <div slot="reference" class="name-wrapper">
+                                <el-tag size="medium">{{ scope.row.author }}</el-tag>
+                            </div>
+                        </el-popover>
+                    </template>
+                </el-table-column>
+                <!-- <el-table-column prop="author" label="作者" width="200"></el-table-column> -->
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button size="small" type="primary" @click="handleEdit(scope.row._id)">编辑</el-button>
-                        <el-button size="small" type="danger">删除分类</el-button>
+                        <el-button size="small" type="danger">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
+            <el-pagination class="footer-page" @current-change="pageChange" :page-size="5" background layout="prev, pager, next" :total="100"></el-pagination>
         </div>
     </div>
 </template>
@@ -31,12 +43,13 @@
     export default {
         data () {
             return {
-                tableData:[]
+                tableData:[],
+                page:1
             }
         },
         methods:{
             getData () {
-                this.$axios.get('/book').then(res => {
+                this.$axios.get('/book',{pn:this.page, size:5}).then(res => {
                     console.log(res)
                     this.tableData = res.data
                 })
@@ -47,6 +60,11 @@
                     path:'/layout/bookedit',
                     query: {name:id}
                 })
+            },
+            pageChange (page) {
+                console.log(page)
+                this.page = page
+                this.getData()
             }
         },
         created () {
@@ -60,4 +78,7 @@
      width: 50px;
      height: 50px;
  }
+ .footer-page{
+      margin-left: 320px;
+  }
 </style>

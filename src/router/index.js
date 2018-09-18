@@ -16,7 +16,10 @@ const components = {
   addbooks:() => import('../view/booksmanage/addbooks'),
   addusers:() => import('../view/users/addusers'),
   changeusers:() => import('../view/users/changeusers'),
-  addcategory:() => import('../view/categorylist/addcategory')
+  addcategory:() => import('../view/categorylist/addcategory'),
+  changepassword:() => import('../view/users/changepassword'),
+  carousel:() => import('../view/carousel/carousel'),
+  addcarousel:() => import('../view/carousel/addcarousel')
 }
 
 export default new Router({
@@ -103,6 +106,27 @@ export default new Router({
             title:'添加分类'
           },
           component:components.addcategory
+        },
+        {
+          path:'changepassword',
+          meta:{
+            title:'修改密码'
+          },
+          component:components.changepassword
+        },
+        {
+          path:'carousel',
+          meta:{
+            title:'轮播图管理'
+          },
+          component:components.carousel
+        },
+        {
+          path:'addcarousel',
+          meta:{
+            title:'添加轮播图'
+          },
+          component:components.addcarousel
         }
       ]
     }

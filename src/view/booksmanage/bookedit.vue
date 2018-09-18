@@ -14,7 +14,7 @@
                     <el-input v-model="formData.author"></el-input>
                 </el-form-item>
                 <el-form-item label="图书头图">
-                    <h3>暂时先放着</h3>
+                    <uploadcom v-model="formData.img"></uploadcom>
                 </el-form-item>
                 <el-form-item label="书籍简介:">
                     <el-input v-model="formData.desc"></el-input>
@@ -39,14 +39,14 @@
 </template>
 
 <script>
+    import uploadcom from '@/components/uploadcom'
     export default {
+        components:{
+            uploadcom
+        },
         data () {
             return {
-                formData:{
-                    // bookname:'',
-                    // author:'',
-                    // desc:''
-                },
+                formData:{},
                 options:[],
                 value:''
             }
@@ -62,13 +62,15 @@
                     this.formData = res.data
                 })
                 this.$axios.get('/category').then(res => {
-                    console.log(res)
                     this.options = res.data
+                    this.$axios.get(`/category/${this.formData.type}`).then(res => {
+                        this.value = res.data.title
+                    })
                 })
             },
             handleSave () {
 
-            }
+            },
         }
     }
 </script>

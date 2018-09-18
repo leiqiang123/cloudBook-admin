@@ -3,15 +3,15 @@
         <h1 class="title">欢迎来到cloudBook 后台操作系统</h1>
         <div class="login-box">
             <h2 class="login-box-title">请登录</h2>
-            <el-form>
-                <el-form-item label="用户名:">
+            <el-form ref="form" :rules="rule" :model="formData">
+                <el-form-item label="用户名:" prop="username">
                     <el-input v-model="formData.username" placeholder="请输入用户名"></el-input>
                 </el-form-item>
-                <el-form-item label="密码:">
-                    <el-input type="password" v-model="formData.password" placeholder="请输入密码"></el-input>
+                <el-form-item label="密码:" prop="password">
+                    <el-input type="password" v-model="formData.password" placeholder="请输入密码" @keyup.enter.native="submitForm"></el-input>
                 </el-form-item>
             </el-form>
-            <el-button @click="handleLogin" type="primary" class="login-btn" :loading="isLoading">登录</el-button>
+            <el-button @click="submitForm" type="primary" class="login-btn" :loading="isLoading">登录</el-button>
         </div>
     </div>
 </template>
@@ -19,12 +19,30 @@
 <script>
     export default {
         data () {
+            const validateUsername = (rule, value, callback) => {
+                if(!value){
+                    callback(new Error('必须输入合法用户名'))
+                }else{
+                    callback()
+                }
+            }
+            const validatePassword = (rule, value, callback) => {
+                if(value && value.length >= 5){
+                    callback()
+                }else{
+                    callback(new Error('请输入合法的密码'))
+                }
+            }
             return {
                 formData: {
                     username:'',
                     password:''
                 },
-                isLoading:false
+                isLoading:false,
+                rule:{
+                    username:[{validator:validateUsername,trigger:'blur'}],
+                    password:[{validator:validatePassword,trigger:'blur'}]
+                }
             }
         },
         methods:{
@@ -45,6 +63,15 @@
                 }).catch(res => {
                     this.isLoading = false
                 })
+            },
+            submitForm(formName) {
+                this.$refs['form'].validate((valid) => {
+                if (valid) {
+                    this.handleLogin()
+                } else {
+                    return false;
+                }
+                });
             }
         }
     }

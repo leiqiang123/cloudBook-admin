@@ -7,10 +7,20 @@
             </el-breadcrumb>
         </div>
         <el-table :data="tableData">
-            <el-table-column prop="nickname" label="姓名" width="130"></el-table-column>
-            <el-table-column prop="createdTime" label="日期" width="130"></el-table-column>
-            <el-table-column prop="desc" label="个性签名" width="400"></el-table-column>
-            <el-table-column label="用户头像" width="100">
+            <el-table-column prop="username" label="用户名" width="180"></el-table-column>
+            <el-table-column prop="createdTime" label="日期" width="180"></el-table-column>
+            <el-table-column label="昵称" width="180">
+                <template slot-scope="scope">
+                    <el-popover trigger="hover" placement="top">
+                        <p>邮箱: {{ scope.row.email }}</p>
+                        <p>个性签名: {{ scope.row.desc }}</p>
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">{{ scope.row.nickname }}</el-tag>
+                        </div>
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column label="用户头像" width="180">
                 <template slot-scope="scope">
                     <img :src="scope.row.avatar" class="avatar">
                 </template>
@@ -38,6 +48,7 @@ export default {
     methods:{
         getData () {
             this.$axios.get('/user',{pn: this.page, size: 7}).then(res => {
+                console.log(res)
                 if(res.code == 200){
                     this.count = res.count
                     this.tableData = res.data

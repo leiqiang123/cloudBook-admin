@@ -26,6 +26,7 @@
                         <el-menu-item index="/layout/users">用户管理页</el-menu-item>
                         <el-menu-item index="/layout/addusers">添加用户管理</el-menu-item>
                         <el-menu-item index="/layout/changeusers">修改用户信息</el-menu-item>
+                        <el-menu-item index="/layout/changepassword">修改密码</el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
                 <el-submenu index="2">
@@ -50,10 +51,17 @@
                         <el-menu-item index="/layout/addbooks">添加图书</el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-menu-item index="4">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">其他管理</span>
-                </el-menu-item>
+                <el-submenu index="4">
+                    <template slot="title">
+                        <i class="el-icon-location"></i>
+                        <span>轮播图管理</span>
+                    </template>
+                    <el-menu-item-group>
+                        <template slot="title">轮播图管理</template>
+                        <el-menu-item index="/layout/carousel">轮播图列表</el-menu-item>
+                        <el-menu-item index="/layout/addcarousel">添加轮播图</el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
             </el-menu>
         </div>
         <div class="main-content ml-200">
@@ -80,6 +88,7 @@
     }
     .ml-200{
         margin-left: 200px;
+        position: relative;
     }
     .left-bar{
         position: fixed;
@@ -100,13 +109,14 @@
         }
     }
     .header-r{
-        position: fixed;
+        position: absolute;
         top: 0;
         right: 30px;
     }
     .header-img{
         width: 60px;
         height: 60px;
+        border-radius: 50%;
     }
 }
 </style>
