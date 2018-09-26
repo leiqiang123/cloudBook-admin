@@ -14,8 +14,8 @@
                         <img :src="scope.row.img" class="avatar">
                     </template>
                 </el-table-column>
-                <el-table-column prop="index" label="书籍排序" width="200"></el-table-column>
-                <el-table-column label="作者" width="200">
+                <el-table-column prop="index" label="书籍排序" width="150"></el-table-column>
+                <el-table-column label="作者" width="300">
                     <template slot-scope="scope">
                         <el-popover trigger="hover" placement="top">
                             <p>作者: {{ scope.row.author }}</p>

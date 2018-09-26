@@ -21,6 +21,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination class="footer-page" @current-change="pageChange" :page-size="5" background layout="prev, pager, next" :total="count"></el-pagination>
     </div>
 </template>
 
@@ -28,13 +29,16 @@
     export default {
         data() {
             return {
-                tableData:[]
+                tableData:[],
+                page:1,
+                count:1
             }
         },
         methods:{
             getData () {
-                this.$axios.get('/category').then(res => {
+                this.$axios.get('/category',{pn:this.page, size:5}).then(res => {
                     console.log(res)
+                    this.count = res.count
                     this.tableData = res.data
                 })
             },
@@ -46,12 +50,27 @@
                 })
             },
             handleDelete (id) {
-                this.$axios.delete(`/category/${id}`).then(res => {
-                    if(res.code == 200){
-                        this.$message.success(res.msg)
-                        this.getData()
-                    }
-                })
+                this.$confirm('此操作将删除一个分类, 是否继续?', '警告', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$axios.delete(`/category/${id}`).then(res => {
+                        if(res.code == 200){
+                            this.$message.success(res.msg)
+                            this.getData()
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });          
+                });             
+            },
+            pageChange (page) {
+                this.page = page
+                this.getData()
             }
         },
         created () {
@@ -65,4 +84,7 @@
     width: 50px;
     height: 50px;
 }
+.footer-page{
+      margin-left: 320px;
+  }
 </style>

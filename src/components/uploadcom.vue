@@ -40,6 +40,7 @@
         axios.post("https://upload-z1.qiniup.com", form, {
           headers: {"Content-Type": "multipart/form-data"}
         }).then(res => {
+          // this.currentValue = res.data.url
           this.$emit('input',res.data.url)
         })
       },

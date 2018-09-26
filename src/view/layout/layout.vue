@@ -2,13 +2,13 @@
     <div class="layout">
         <div class="header ml-200">
             <h1 class="title">云书后台操作系统</h1>
-            <el-dropdown class="header-r">
+            <el-dropdown class="header-r" @command="handleCommand">
                 <span class="el-dropdown-link">
                     <img class="header-img" :src="this.$store.state.userinfo.avatar">
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>修改个人信息</el-dropdown-item>
-                    <el-dropdown-item>退出登录</el-dropdown-item>
+                    <el-dropdown-item command="1">修改个人信息</el-dropdown-item>
+                    <el-dropdown-item command="2">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -25,7 +25,7 @@
                         <el-menu-item index="/login">登录页</el-menu-item>
                         <el-menu-item index="/layout/users">用户管理页</el-menu-item>
                         <el-menu-item index="/layout/addusers">添加用户管理</el-menu-item>
-                        <el-menu-item index="/layout/changeusers">修改用户信息</el-menu-item>
+                        <el-menu-item index="/layout/changeusers">修改个人信息</el-menu-item>
                         <el-menu-item index="/layout/changepassword">修改密码</el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
@@ -72,7 +72,17 @@
 
 <script>
     export default {
-        
+        methods:{
+            handleCommand (command) {
+                // console.log(command)
+                // let cilck = command
+                if(command == 1){
+                    this.$router.push('/layout/changeusers')
+                }else if(command == 2){
+                    this.$router.push('/login')
+                }
+            }
+        }
     }
 </script>
 

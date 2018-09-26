@@ -1,5 +1,9 @@
 <template>
     <div>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/layout/index' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>修改用户信息</el-breadcrumb-item>
+        </el-breadcrumb>
         <el-form>
             <el-form-item label="用户名:">
                 <el-input :disabled="true" v-model="formData.username"></el-input>
@@ -18,6 +22,7 @@
             </el-form-item>
         </el-form>
         <el-button @click="handleClick" type="primary">提交修改</el-button>
+        <el-button @click="handleReset" type="primary">重置</el-button>
     </div>
 </template>
 
@@ -53,6 +58,15 @@
                         this.$message.success(res.msg)
                     }
                 })
+            },
+            handleReset () {
+                this.formData = {
+                    username:'',
+                    nickname:'',
+                    email:'',
+                    avatar:'',
+                    desc:''
+                }
             }
         },
         created () {

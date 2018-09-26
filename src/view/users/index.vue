@@ -8,7 +8,7 @@
         </div>
         <el-table :data="tableData">
             <el-table-column prop="username" label="用户名" width="180"></el-table-column>
-            <el-table-column prop="createdTime" label="日期" width="180"></el-table-column>
+            <el-table-column prop="date" label="日期" width="180"></el-table-column>
             <el-table-column label="昵称" width="180">
                 <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top">
@@ -32,7 +32,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination class="footer-page" @current-change="pageChange" :page-size="7" background layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination class="footer-page" @current-change="pageChange" :page-size="7" background layout="prev, pager, next" :total="count"></el-pagination>
     </div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
     data(){
         return {
             tableData:[],
-            count:0,
+            count:1,
             page:1
         }
     },
@@ -51,7 +51,18 @@ export default {
                 console.log(res)
                 if(res.code == 200){
                     this.count = res.count
-                    this.tableData = res.data
+                    // this.tableData = res.data
+                    this.tableData = res.data.map(item => {
+                        let time = new Date(item.createdTime)
+                        let year = time.getFullYear()
+                        let mon = time.getMonth()
+                        let day = time.getDate()
+                        let hour = time.getHours()
+                        let min = time.getMinutes()
+                        let sec = time.getSeconds()
+                        item.date = `${year}-${mon + 1}-${day} ${hour}:${min}:${sec}`
+                        return item
+                    })
                 }
             })
         },

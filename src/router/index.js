@@ -127,6 +127,14 @@ export default new Router({
             title:'添加轮播图'
           },
           component:components.addcarousel
+        },
+        {
+          path:'editcarousel',
+          name:'editcarousel',
+          meta:{
+            title:'编辑轮播图'
+          },
+          component:components.addcarousel
         }
       ]
     }

@@ -16,5 +16,11 @@ export default {
   padding: 0;
   margin: 0;
 }
-
+.clearfix::after{
+  content: '';
+  display: block;
+  clear: both;
+  width: 0;
+  height: 0;
+}
 </style>
